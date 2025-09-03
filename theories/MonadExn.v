@@ -1,7 +1,7 @@
 (* Exception monad *)
 
 From Equations Require Import Equations.
-From Coq Require Import Utf8 List Arith Lia.
+From Stdlib Require Import Utf8 List Arith Lia.
 From PartialFun Require Import PartialFun Monad.
 
 Import ListNotations.

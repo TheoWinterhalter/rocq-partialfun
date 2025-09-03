@@ -1,7 +1,7 @@
 (* (Yet another) description of monads *)
 
 From Equations Require Import Equations.
-From Coq Require Import Utf8 List Arith Lia.
+From Stdlib Require Import Utf8 List Arith Lia.
 Import ListNotations.
 
 Set Default Goal Selector "!".

@@ -1,7 +1,7 @@
 (* Open general recursion library *)
 
 From Equations Require Import Equations.
-From Coq Require Import Utf8 List Arith Lia.
+From Stdlib Require Import Utf8 List Arith Lia.
 From PartialFun Require Import Monad.
 
 Import ListNotations.

@@ -1,5 +1,5 @@
 From Equations Require Import Equations.
-From Coq Require Import Utf8 List Arith Lia.
+From Stdlib Require Import Utf8 List Arith Lia.
 From PartialFun Require Import  Monad PartialFun.
 
 Import ListNotations.
@@ -24,6 +24,21 @@ Equations test_div : ∇ (p : nat * nat), bool :=
 
 Definition div_10_5 := div @ (10, 5).
 (* Fail Timeout 1 Definition div_10_0 := div @ (10, 0). *)
+
+(* Set Printing All.
+Unset Printing Notations.
+Goal forall x, div = x.
+intros x.
+unfold div.
+Locate "<*>".
+unfold map.
+unfold bind.
+unfold MonadOrec. *)
+
+Definition div' := Eval cbv [ret div map bind MonadOrec rec] in div.
+(* Definition div_10_5' := div' @ (10,5) *)
+
+Extraction "div.ml" div'.
 
 Compute div @ (50,6).
 

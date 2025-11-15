@@ -1,6 +1,22 @@
 name: Partial Fun CI
 
 on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+    - '**.md'
+    - '**.gitignore'
+    - '**.opam'
+    - 'LICENSE'
+
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+    - '**.md'
+    - '**.gitignore'
+    - '**.opam'
+    - 'LICENSE'
+
   workflow_dispatch:
 
 permissions:

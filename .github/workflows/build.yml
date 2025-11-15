@@ -1,0 +1,53 @@
+name: Partial Fun CI
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    env:
+      coq_version: "9.0"
+      fail-fast: true
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Docker-Coq-Action
+        uses: coq-community/docker-coq-action@v1
+        with:
+          coq_version: ${{ env.coq_version }}
+          before_install: |
+            startGroup "Print opam config"
+              sudo chown -R 1000:1000 .
+              opam config list; opam repo list; opam list
+            endGroup
+          before_script: |
+            startGroup "Workaround permission issue"
+              sudo chown -R 1000:1000 .  # <--
+              opam exec -- ocamlfind list
+            endGroup
+          script: |
+            startGroup "Build project"
+              opam exec -- make -j 2
+            endGroup
+          uninstall: |
+            startGroup "Clean project"
+            endGroup
+
+      - name: Revert permissions
+        # to avoid a warning at cleanup time
+        if: ${{ always() }}
+        run: sudo chown -R 1001:116 .  # <--
